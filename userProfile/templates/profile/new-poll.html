@@ -1,0 +1,47 @@
+{% extends 'profile/profilebase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+   <div class="container-fluid add-poll" style="background-image:url({{profile.cover_photo.cover_photo.url}})">
+     <br>
+     <br>
+     <div class="row">
+       <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12 panel-cover">
+         <div class="panel panel-primary">
+           <div class="panel-heading">
+             Add a new poll
+           </div>
+           <div class="panel-body">
+             <form class="" action="{% url 'profile:new-poll-choices' %}" method="post">
+
+
+             {% csrf_token %}
+
+             <div class="form-group">
+               <label for="question">
+                 Question
+               </label>
+               <input type="text" name="question" value="" class="form-control input-lg" minlength="10">
+             </div>
+             <div class="from-group">
+               <label for="int">Topics</label>
+               <br>
+               <select class="selectpicker" name="int" multiple required>
+                  {% for interest in interests %}
+                  <option value="{{interest.id}}">{{interest.interest_name}}</option>
+                  {% endfor %}
+               </select>
+             </div>
+             <br>
+             
+             <button type="submit" class="btn btn-primary btn-lg" name="button">Next</button>
+             <br>
+              </form>
+           </div>
+         </div>
+       </div>
+     </div>
+
+   </div>
+{% endblock %}

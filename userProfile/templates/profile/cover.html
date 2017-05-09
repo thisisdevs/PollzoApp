@@ -1,0 +1,38 @@
+{% extends 'profile/profilebase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container-fluid cover-container">
+
+  <div class="row">
+    <div class="col-xs-12 header" style="background-image:url({{profile.cover_photo.cover_photo.url}})">
+      <div class="profile-photo">
+        <img src="{{profile.profile_pic.url}}" alt="">
+      </div>
+      <h2>{{profileUser.first_name}}&nbsp;{{profileUser.last_name}}</h2>
+      <p style="color:white; text-align:center">{{profile.desciption}}</p>
+    </div>
+  </div>
+  <br>
+  <h1>Choose a cover photo.</h1>
+  <br>
+  <div class="container">
+  <div class="row">
+    {% for photo in coverphotos %}
+      <div class="col-md-3 col-sm-4 col-xs-12 tile-cover">
+        <div class="panel panel-primary photo-tile" data-id={{photo.id}}>
+          <div class="panel-heading">
+            {{photo.name}}
+          </div>
+          <div class="panel-body" style="background-image:url({{photo.cover_photo.url}})">
+
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+  </div>
+
+</div>
+{% endblock %}

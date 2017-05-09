@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style-profile.min.css' %}">
+    <title>{{title}}</title>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+  </head>
+  <body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#Navbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="{% url 'signing:initial' %}">pollzo</a>
+      </div>
+      <div class="collapse navbar-collapse" id="Navbar">
+        <ul class="navbar-nav nav">
+          <li class={% block profile-active %}{% endblock %}>
+            <a href="/user/{{currentUserName}}/"><span class="glyphicon glyphicon-user"></span> &nbsp;Profile</a>
+          </li>
+          <li class={% block feed-active %}{% endblock %}>
+            <a href="{% url 'profile:feed' user_name=currentUserName %}"><span class="glyphicon glyphicon-list"></span> &nbsp;News Feed</a>
+          </li>
+          <li class={% block people-active %}{% endblock %}>
+            <a href="{% url 'profile:people' user_name=currentUserName %}"><span class="glyphicon glyphicon-search"></span> &nbsp;Find People</a>
+          </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{% url 'profile:logout' %}"><span class="glyphicon glyphicon-off"></span> &nbsp;Logout</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <br>
+
+  {%block content%}
+  {% endblock %}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="{% static 'js/main.js' %}" charset="utf-8"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js" charset="utf-8"></script>
+  <script type="text/javascript">
+     $('.selectpicker').selectpicker();
+  </script>
+  </body>
+</html>

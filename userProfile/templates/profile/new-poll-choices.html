@@ -1,0 +1,53 @@
+{% extends 'profile/profilebase.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container-fluid add-poll-choices" style="background-image:url({{profile.cover_photo.cover_photo.url}})">
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-6 col-xs-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Add Choices to your question
+        </div>
+        <div class="panel-body">
+
+          <strong style="font-size:18px">{{question.question_text}}</strong>
+          <br>
+          <div class="added">
+            {% for choice in question.choice_set.all %}
+
+            <br>
+            Choice#{{forloop.counter}} : {{choice.choice_text}}
+
+            {% endfor %}
+          </div>
+          <div class="add-here">
+            <br>
+            <div class="row">
+              <form id="choice-1-form" class="inline-form" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="question" value="{{question.question_text}}">
+                <div class="col-xs-9">
+                  <input type="text" name="choice_item" class="form-control input-lg choice-item" value="" required placeholder="Add your choice here">
+                </div>
+                <div class="col-xs-3" style="padding:0;">
+                  <button type="submit" class="btn add-choice-btn btn-success btn-lg" name="button"><span class="glyphicon glyphicon-plus"></span>&nbsp;Add</button>
+                </div>
+              </form>
+              <br>
+
+              <t><t><a href="{% url 'profile:userprofileview' user_name=currentUserName %}"><button style="margin:20px" type="button" class="btn btn-primary btn-lg "name="button">Done</button></a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

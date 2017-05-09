@@ -1,0 +1,43 @@
+{% extends 'signing/signing-base.html' %}
+{% load staticfiles %}
+
+{% block linkTitle %}Sign Up{% endblock %}
+{% block linkUrl %}{% url 'signing:signup' %}{% endblock %}
+{% block content %}
+
+<div class="container-fluid content-wrap-login" style="background-image:url({% static 'images/people.jpg'%})">
+  <br>
+  <br>
+  <br>
+
+  <div class="row">
+    <div class="col-sm-offset-3 col-sm-6 col-md-offset-4 col-md-4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          Know what your fellow humans have opinion about
+        </div>
+        <div class="panel-body">
+          <p>{{message}}</p>
+          <form action="{% url 'signing:login' %}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input type="text" id="username" name="user_name" class="form-control input-lg" required placeholder="Username">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input id="password" type="password" name="pass_word" class="form-control input-lg" required placeholder="Password">
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-lg" >Login</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

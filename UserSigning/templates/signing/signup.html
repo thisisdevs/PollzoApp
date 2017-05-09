@@ -1,0 +1,50 @@
+{% extends 'signing/signing-base.html' %}
+{% load staticfiles %}
+{% block linkTitle %}login{% endblock %}
+{% block linkUrl %}{% url 'signing:login' %}{% endblock %}
+
+{% block content %}
+  <div class="container-fluid content-wrap-signup" style="background-image:url({% static 'images/bg2.jpg' %})">
+      <br>
+      <br>
+
+      <div class="row">
+        <div class="col-md-offset-3 col-md-6 col-sm-12">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              Regiter as a new pollzo user.
+            </div>
+            <div class="panel-body">
+              <p>{{message}}</p>
+              <form action="{% url 'signing:signup' %}" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="username" class="sr-only">User Name</label>
+                  <input type="text" class="form-control input-lg" name="user_name" id="username" value="" placeholder="Select a user name" pattern="^[A-Za-z]+$" aria-describedby='helpUserName' required>
+                  <span id="helpUserName" class="form-text text-muted">should consist of letters only</span>
+                </div>
+                <div class="form-group">
+                  <label for="fname" class="sr-only">First Name</label>
+                  <input type="text" class="form-control input-lg" name="first_name" id="fname" value="" placeholder="First name" required>
+                </div>
+                <div class="form-group">
+                  <label for="email" class="sr-only">Email</label>
+                  <input type="email" class="form-control input-lg" name="email" id="email" value="" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                  <label for="password" class="sr-only">Password</label>
+                  <input type="password" minlength=8 class="form-control input-lg" name="pass_word" id="password" value="" placeholder="Choose a password" required>
+                </div>
+                <div class="form-group">
+                  <label for="prof">Select a profile picture</label>
+                  <input type="file" class="form-control" name="prof" id="prof" accept='image/*' required>
+                </div>
+
+                <button type="submit" class='btn btn-primary btn-lg' name="button">Sign Up</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock %}

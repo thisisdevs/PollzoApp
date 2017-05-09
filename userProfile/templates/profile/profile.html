@@ -1,0 +1,125 @@
+{% extends 'profile/profilebase.html' %}
+{% load staticfiles %}
+{% block profile-active %}"active"{% endblock %}
+{% block content %}
+  <style media="screen">
+    body{
+
+      padding-bottom: 70px;
+    }
+  </style>
+  <div class="container-fluid profile-container" style="padding-bottom:70px;">
+    <div class="row">
+      <div class="col-xs-12 header" style="background-image:url({{profile.cover_photo.cover_photo.url}})">
+        {% if isSameUser %}
+        <a href="{% url 'profile:cover'%}" class="change-cover"><span class="glyphicon glyphicon-camera"></span>&nbsp;Change cover</a>
+        {% else %}
+        {% if not isFollowing %}
+        <button type="button" class="btn btn-primary btn-lg f-btn" data-id={{profile.id}} name="button"><span class="glyphicon glyphicon-ok-sign"></span>&nbsp;Follow</button>
+        {% else %}
+        <button type="button" class="btn btn-danger btn-lg f-btn" data-id={{profile.id}} name="button"><span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Unfollow</button>
+        {% endif %}
+        {% endif %}
+        <div class="profile-photo">
+          <img src="{{profile.profile_pic.url}}" alt="">
+        </div>
+        <h2>{{profileUser.first_name}}&nbsp;{{profileUser.last_name}}</h2>
+        <p style="color:white; text-align:center">{{profile.desciption}}</p>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-sx-12  hidden-md hidden-lg detail">
+        {% if isSameUser %}
+           <a href="{% url 'profile:new-poll' %}"><button class="btn btn-danger btn-lg" type="button"><span class="glyphicon glyphicon-plus"></span>&nbsp;New Poll</button></a>
+
+           <a href="{% url 'profile:edit' %}"><button type="button" class="btn btn-primary btn-lg" name="button"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Edit Profile</button></a>
+
+           <a href="{% url 'profile:interests' user_name=profileUser.username%}"><button class="btn btn-primary btn-lg" type="button"><span class="glyphicon glyphicon-glass"></span>&nbsp;Interests</button></a>
+        {% endif %}
+
+        <a href="{% url 'profile:followers' user_name=currentUserName %}"><button type="button" class="btn btn-success btn-lg" name="button">{{followers}} followers</button></a>
+        
+        <a href="{% url 'profile:following' user_name=currentUserName %}"><button type="button" class="btn btn-success btn-lg" name="button">{{following}} following</button></a>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="side-pane col-md-3 hidden-xs hidden-sm">
+        <br>
+        {% if isSameUser %}
+           <a href="{% url 'profile:new-poll' %}"><button class="btn btn-danger btn-lg" type="button"><span class="glyphicon glyphicon-plus"></span>&nbsp;New Poll</button></a>
+           <br>
+           <a href="{% url 'profile:edit' %}"><button type="button" class="btn btn-primary btn-lg" name="button"><span class="glyphicon glyphicon-sunglasses"></span>&nbsp;Edit Profile</button></a>
+           <br>
+           <a href="{% url 'profile:interests' user_name=profileUser.username%}"><button class="btn btn-primary btn-lg" type="button"><span class="glyphicon glyphicon-glass"></span>&nbsp;Interests</button></a>
+        {% endif %}
+        <br>
+        <a href="{% url 'profile:followers' user_name=currentUserName %}"><button type="button" class="btn btn-success btn-lg" name="button">{{followers}} followers</button></a>
+        <br>
+        <a href="{% url 'profile:following' user_name=currentUserName %}"><button type="button" class="btn btn-success btn-lg" name="button">{{following}} following</button></a>
+      </div>
+
+      <div class="col-md-9 col-sm-12 question main-profile-container">
+        <br>
+        <br>
+        {% if questions %}
+        {% if isSameUser %}
+        <a style="text-align:center;display:block;">Questions created by you.</a>
+        {% else %}
+        <a style="text-align:center;display:block;">Questions created by {{profileUser.first_name}}</a>
+        {% endif %}
+        <br>
+
+        <div class="q-container">
+            {% for question in question_choices %}
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="panel panel-primary">
+                  <div class="panel-heading">
+                    <h5>{{question.question.question_text}}</h5>
+                  </div>
+                  <div class="panel-body">
+                    {% for choice in question.choices %}
+                    <div class="choice-box" {% if choice in my_choices %} style='background-color:#697f4d;color:white;' {% endif %}data-q={{question.question.id}} data-c={{choice.id}}>
+                      <div class="choice-text">
+                        {{choice.choice_text}}
+                      </div>
+                      <div class="vote-count">
+                        {{choice.vote_Count}}
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  <div class="panel-footer">
+                    <button class="btn-default btn delete-poll-btn" data-q={{question.question.id}}><span class="glyphicon glyphicon-trash"></span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% else %}
+        {% if isSameUser %}
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="panel panel-danger">
+              <div class="panel-heading">
+                You don't have any polls yet
+              </div>
+              <div class="panel-body">
+                <a href="{% url 'profile:new-poll' %}"><button class="btn btn-danger btn-lg" style="margin:0 auto; display:block">Add a poll</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <a>User have not created any poll yet</a>
+        {% endif %}
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+{% endblock %}

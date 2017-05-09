@@ -1,0 +1,57 @@
+{% extends 'profile/profilebase.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<div class="container-fluid container-interests" style="background-image:url({% static 'images/intbg.jpg'%})">
+  <h1>{% if isSameUser %}Follow your interests{% else %}{{currentPollzoProfile.user.first_name}}'s interests{% endif %}</h1>
+  <br>
+  {% if isSameUser %}
+  {% for interest in all_interests %}
+  <div class="row">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
+       <div class="panel panel-default">
+         <div class="panel-body">
+           <div class="row">
+             <div class="col-xs-8">
+               <strong>{{interest.interest_name}}</strong>
+             </div>
+             <div class="col-xs-4">
+                {% if interest in currentPollzoProfile.interests.all %}
+                <button class="btn btn-danger int-btn" data-id='{{interest.id}}'>Unfollow</button>
+                {% else %}
+                <button class="btn btn-primary int-btn" data-id='{{interest.id}}'>Follow</button>
+                {% endif %}
+             </div>
+           </div>
+         </div>
+       </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  {% for interest in currentPollzoProfile.interests.all %}
+  <div class="row">
+    <div class="col-md-offset-4 col-md-4 col-sm-offset-3 col-sm-6 col-xs-12">
+       <div class="panel panel-default">
+         <div class="panel-body">
+           <div class="row">
+             <div class="col-xs-8">
+               <strong>{{interest.interest_name}}</strong>
+             </div>
+             <div class="col-xs-4">
+                {% if interest in currentPollzoUser.interests.all %}
+                <button class="btn btn-danger int-btn" data-id="{{interest.id}}">Unfollow</button>
+                {% else %}
+                <button class="btn btn-primary int-btn" data-id="{{interest.id}}">Follow</button>
+                {% endif %}
+             </div>
+           </div>
+         </div>
+       </div>
+    </div>
+  </div>
+  {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
