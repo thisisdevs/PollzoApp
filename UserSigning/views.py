@@ -48,5 +48,5 @@ def signup_view(request):
             new_user_profile = PollzoUser(user=new_user,profile_pic=profile_pic)
             new_user_profile.save(force_insert=False, force_update=False, using=None, update_fields=None)
             login(request, new_user, backend=None)
-            return HttpResponseRedirect(reverse('profile:userprofileview',kwargs={'username':user_name}))
+            return HttpResponseRedirect(reverse('profile:userprofileview',kwargs={'user_name':user_name}))
     return render(request,"signing/signup.html", context, content_type=None, status=None, using=None)
