@@ -5,7 +5,7 @@ from .models import PollzoUser, Interest, CoverPhoto, Question, Choice, UserVote
 from django.contrib.auth.models import User
 from django.contrib.auth import logout,login,authenticate
 from django.contrib.auth.decorators import login_required
-from forms import QuestionForm
+#from forms import QuestionForm
 # Create your views here.
 @login_required
 def profile_view(request,user_name):
